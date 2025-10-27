@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_USER = 'lasyacloudlab'
-        IMAGE_NAME = 'jenkins-docker-lab1'
+        IMAGE_NAME = 'jenkins-docker-lab'
     }
     stages {
         stage('Clean up image and container') {
@@ -19,7 +19,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKERHUB_USER/$IMAGE_NAME:latest python app'
+                    sh 'docker build -t $DOCKERHUB_USER/$IMAGE_NAME:latest python-app'
                 }
             }
         }
