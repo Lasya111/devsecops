@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'docker-agent-vm'
+        label 'docker-agent-Lasya'
     }
     environment {
         DOCKERHUB_USER = 'lasyacloudlab'
