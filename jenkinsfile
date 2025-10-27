@@ -7,21 +7,22 @@ pipeline {
         IMAGE_NAME = 'jenkins-docker-lab'
     }
     stages {
-        stage('Clean up image and container') {
+         stage('Scan Docker Image with Trivy') {
             steps {
-                script {
-               //     sh 'git clone git@github.com:Vishwanathms/t7.14-py-jenkins.git'
-                    sh 'docker rm  jenkins_app -f || true'
-                    sh 'docker image rmi $DOCKERHUB_USER/$IMAGE_NAME:latest || true'
-                }
-            }  
-        }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh 'docker build -t $DOCKERHUB_USER/$IMAGE_NAME:latest python-app'
-                }
+                // Scan and save report
+                sh '''
+                  mkdir -p trivy-reports
+                  trivy image --no-progress --exit-code 0 --format table -o trivy-reports/report.txt $DOCKERHUB_USER/$IMAGE_NAME
+                  cat trivy-reports/report.txt
+                '''
             }
+        }
+ 
+        stage('Archive Trivy Report') {
+            steps {
+                archiveArtifacts artifacts: 'trivy-reports/report.txt', fingerprint: true
+            }
+        }
         }
     }
  
