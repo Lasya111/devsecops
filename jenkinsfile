@@ -3,7 +3,7 @@ pipeline {
         label 'docker-agent-Lasya'
     }
     environment {
-        DOCKERHUB_USER = 'lasyacloudlab'
+        DOCKERHUB_USER = 'lasya'
         IMAGE_NAME = 'jenkins-docker-lab'
     }
     stages {
