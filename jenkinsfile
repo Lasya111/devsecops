@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_USER = 'lasyacloudlab'
-        IMAGE_NAME = 'jenkins-docker-lab'
+        IMAGE_NAME = 'jenkins-docker-lab1'
     }
     stages {
         stage('Clean up image and container') {
