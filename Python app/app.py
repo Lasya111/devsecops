@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask
+from flask import Flask # type: ignore
 app = Flask(__name__)
  
 @app.route('/')
