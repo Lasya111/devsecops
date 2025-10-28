@@ -1,13 +1,16 @@
 pipeline {
     agent {
-        label 'docker-agent-Lasya'
+        label 'lasya-ubuntu-a'
+    }
+    triggers {
+    pollSCM('H/3 * * * *') // checks every 3 mins, or
+    // OR use GitHub webhook instead (recommended)
     }
     environment {
-        DOCKERHUB_USER = 'lasya'
+        DOCKERHUB_USER = 'lasy'
         IMAGE_NAME = 'jenkins-docker-lab'
     }
     stages {
-
         stage('Clean up image and container') {
             steps {
                 script {
@@ -23,15 +26,7 @@ pipeline {
                     sh 'docker build -t $DOCKERHUB_USER/$IMAGE_NAME:latest python-app'
                 }
             }
-         stage('Scan Docker Image with Trivy') {
-            steps {
-                // Scan and save report
-                sh '''
-                  mkdir -p trivy-reports
-                  trivy image --no-progress --exit-code 0 --format table -o trivy-reports/report.txt $DOCKERHUB_USER/$IMAGE_NAME
-                  cat trivy-reports/report.txt
-                '''
-            }
+        }
         stage('Scan Docker Image with Trivy') {
             steps {
                 // Scan and save report
@@ -42,17 +37,12 @@ pipeline {
                 '''
             }
         }
- 
         stage('Archive Trivy Report') {
             steps {
                 archiveArtifacts artifacts: 'trivy-reports/report.txt', fingerprint: true
             }
         }
-        }
     }
-        }
-
- 
     post {
         success {
             echo 'Pipeline completed successfully!'
@@ -62,4 +52,3 @@ pipeline {
         }
     }
 }
- 
