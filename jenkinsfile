@@ -14,7 +14,7 @@ pipeline {
         stage('Clean up image and container') {
             steps {
                 script {
-                    sh 'git clone git@github.com:Vishwanathms/t7.14-py-jenkins.git'
+                    // sh 'git clone git@github.com:Vishwanathms/t7.14-py-jenkins.git'
                     sh 'docker rm  jenkins_app -f || true'
                     sh 'docker image rmi $DOCKERHUB_USER/$IMAGE_NAME:latest || true'
                 }
