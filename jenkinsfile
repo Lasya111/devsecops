@@ -7,7 +7,7 @@ pipeline {
     // OR use GitHub webhook instead (recommended)
     }
     environment {
-        DOCKERHUB_USER = 'lasy'
+        DOCKERHUB_USER = 'lasya'
         IMAGE_NAME = 'jenkins-docker-lab'
     }
     stages {
@@ -23,7 +23,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKERHUB_USER/$IMAGE_NAME:latest python-app'
+                    sh 'docker build -t $DOCKERHUB_USER/$IMAGE_NAME:latest Python-app'
                 }
             }
         }
